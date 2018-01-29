@@ -1,26 +1,24 @@
+/* eslint-disable react/no-did-mount-set-state */
 import React, { Component } from 'react';
 import './App.css';
 
-import Recipe from './Recipe';
+import Movie from './Movie';
 
 class App extends Component {
-
   state = {
-    recipes: []
+    movies: [],
   }
 
   async componentDidMount() {
     try {
-
       const res = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=198c3f3ed3e372e7bda3489518909b8f&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1');
 
-      const recipes = await res.json();
+      const movies = await res.json();
 
       // Once API comes back with data we set the state of recipes to the results here...
       this.setState({
-        recipes: recipes.results
-      })
-
+        movies: movies.results,
+      });
     } catch (e) {
       console.log(e);
     }
@@ -32,11 +30,10 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-logo" alt="logo">brewDB</h1>
         </header>
-        {this.state.recipes.map(recipe => <Recipe key={recipe.id} recipe={recipe} />)}
+        {this.state.movies.map(movie => <Movie key={movie.id} movie={movie} />)}
       </div>
     );
   }
-
 }
 
 export default App;
